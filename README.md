@@ -46,7 +46,7 @@ R_EXPRESSION = EXPRESSION, {("==" | ">" | "<"), EXPRESSION};
 EXPRESSION   = TERM, {("+" | "-" | ".."), TERM};
 TERM         = FACTOR, {("/" | "*"), FACTOR};
 
-FACTOR = num | str | ident | ("+" | "-" | "not", FACTOR) | ("(", B_EXPRESSION, ")") | ("read", "(", ")");
+FACTOR = num | str | ident | ("+" | "-" | "not", FACTOR) | ("(", B_EXPRESSION, ")") | ("where", ("estou", "está"));
 
 ordinal_nonzero = "1st" | "2nd" | "3rd" | "4th" | "5th" | "6th" | "7th" | "8th" | "9th";
 ordinal = ordinal_nonzero_num | "0th";
