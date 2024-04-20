@@ -31,7 +31,7 @@ STATEMENT = (ASSIGN_STAT | PRINT_STAT | WHILE_STAT | IF_STAT | DECLARE_STAT | CA
 ASSIGN_STAT  = "pombo", ident, "agora", "is", B_EXPRESSION;
 PRINT_STAT   = "where", ("estou" | "está");
 WHILE_STAT   = "enquanto", "waiting", "elevador", "\n", {TABBED_STAT};
-IF_STAT      = "térreo???", "bottom", "\n", {TABBED_STAT}; 
+IF_STAT      = "térreo", "?", "?", "?", "\n", {TABBED_STAT}; 
 DECLARE_STAT = "grab", "pombo", ident, ["=", B_EXPRESSION];
 CALL_STAT    = "call", "elevador";
 ENTER_STAT   = "enter", "elevador";
