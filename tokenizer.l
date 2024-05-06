@@ -59,7 +59,8 @@ Desempenha papel similar ao Tokenizer do compilador da disciplina.
 		NOT 						= 302,	// not
 		OPENPAR						= 303, 	// (
 		CLOSEPAR					= 304,	// )
-		GROUND						= 305,
+		GROUND						= 305,	// ground
+		ORDINAL 					= 306,
 		TAB            				= 499,
 		EOL             			= 500
 	};
@@ -117,6 +118,7 @@ Desempenha papel similar ao Tokenizer do compilador da disciplina.
 ")"							{ return CLOSEPAR; }
 "ground"					{ return GROUND; }
 "\n"						{ return EOL; }
+[0-9]+						{ intval = atoi(yytext); return NUMBER; }
 [a-zA-Z]+[a-zA-Z_]*			{ sprintf(strval, "%s", yytext); return IDENT; }
 [ ]  						{ /* ignora espaços */ }
 .      						{ printf("Mystery character %c\n", *yytext); }
