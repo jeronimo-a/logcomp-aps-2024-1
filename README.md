@@ -49,7 +49,7 @@ TERM         = FACTOR, {("/" | "*"), FACTOR};
 FACTOR = num | str | ident | ("+" | "-" | "not", FACTOR) | ("(", B_EXPRESSION, ")") | ("where", ("estou", "está"));
 
 ordinal_nonzero = "1st" | "2nd" | "3rd" | "4th" | "5th" | "6th" | "7th" | "8th" | "9th";
-ordinal = ordinal_nonzero_num | "0th";
+ordinal = ordinal_nonzero | "0th";
 story_number = ("ground" | ({digit}, ordinal) | ordinal_nonzero);
 
 digit = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
