@@ -120,6 +120,7 @@ Desempenha papel similar ao Tokenizer do compilador da disciplina.
 "\n"						{ return EOL; }
 [0-9]+						{ intval = atoi(yytext); return NUMBER; }
 [a-zA-Z]+[a-zA-Z_]*			{ sprintf(strval, "%s", yytext); return IDENT; }
+"\""[^"\""]+"\""			{ sprintf(strval, "%s", yytext); return STRING; }
 [ ]  						{ /* ignora espaços */ }
 .      						{ printf("Mystery character %c\n", *yytext); }
 
