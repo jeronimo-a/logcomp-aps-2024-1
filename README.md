@@ -32,7 +32,7 @@ ASSIGN_STAT  = "pombo", ident, "agora", "is", B_EXPRESSION;
 PRINT_STAT   = "where", ("estou" | "está");
 WHILE_STAT   = "enquanto", "waiting", "elevador", "\n", {TABBED_STAT};
 IF_STAT      = "térreo", "?", "?", "?", "\n", {TABBED_STAT}; 
-DECLARE_STAT = "grab", "pombo", ident, ["=", B_EXPRESSION];
+DECLARE_STAT = "grab", "pombo", ident, ["é", B_EXPRESSION];
 CALL_STAT    = "call", "elevador";
 ENTER_STAT   = "enter", "elevador";
 LEAVE_STAT   = "leave", "elevador";
@@ -42,7 +42,7 @@ DOWN_STAT    = "descer", "stairs";
 
 B_EXPRESSION = B_TERM, {"or", B_TERM};
 B_TERM       = R_EXPRESSION, {"and", R_EXPRESSION};
-R_EXPRESSION = EXPRESSION, {("==" | ">" | "<"), EXPRESSION};
+R_EXPRESSION = EXPRESSION, {("==" | ">" | "<" | "!=" | ">=" | "<="), EXPRESSION};
 EXPRESSION   = TERM, {("+" | "-" | ".."), TERM};
 TERM         = FACTOR, {("/" | "*"), FACTOR};
 
@@ -69,5 +69,5 @@ symbol = "[" | "]" | "{" | "}" | "(" | ")" | "<" | ">"
 
 num   = digit, {digit};
 ident = letter, {digit | letter | "_"};
-str   = '"', {digit | letter | symbol}, "'";
+str   = '"', {digit | letter | symbol}, '"';
 ```
