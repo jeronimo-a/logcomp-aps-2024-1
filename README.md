@@ -26,11 +26,11 @@ BLOCK = INPUT, {STATEMENT};
 
 TABBED_STAT  = "\t", STATEMENT;
 
-STATEMENT = (ASSIGN_STAT | PRINT_STAT | WHILE_STAT | IF_STAT | DECLARE_STAT | CALL_STAT | CALL_STAT | ENTER_STAT | LEAVE_STAT | PUSH_STAT | UP_STAT | DOWN_STAT), "\n";
+STATEMENT = {"\n"}, (ASSIGN_STAT | PRINT_STAT | WHILE_STAT | IF_STAT | DECLARE_STAT | CALL_STAT | ENTER_STAT | LEAVE_STAT | PUSH_STAT | UP_STAT | DOWN_STAT), "\n";
 
 ASSIGN_STAT  = "pombo", ident, "agora", "is", B_EXPRESSION;
-PRINT_STAT   = "where", ("estou" | "está");
-WHILE_STAT   = "enquanto", "waiting", "elevador", "\n", {TABBED_STAT};
+PRINT_STAT   = "where", ("estou" | "está"), "?", "?", "?";
+WHILE_STAT   = "enquanto", "waiting", "elevador", "\n", {TABBED_STAT, "\n"};
 IF_STAT      = "térreo", "?", "?", "?", "\n", {TABBED_STAT}; 
 DECLARE_STAT = "grab", "pombo", ident, ["é", B_EXPRESSION];
 CALL_STAT    = "call", "elevador";
