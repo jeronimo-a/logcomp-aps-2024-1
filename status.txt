@@ -18,5 +18,3 @@ Parser: TIPOS DE STATEMENT
 		WHILE
 		IF
 		apertar o botão para o térreo
-
-Statement sem quebra de linha ao final do arquivo da problema
