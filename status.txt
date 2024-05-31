@@ -17,4 +17,3 @@ Parser:
 		ASSIGN
 
 	Quebrado:
-		IDENT com acento não funciona, dá erro de parsing

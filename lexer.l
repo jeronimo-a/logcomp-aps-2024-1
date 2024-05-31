@@ -11,7 +11,7 @@ Desempenha papel similar ao Tokenizer do compilador da disciplina.
 %}
 
 DIGIT       [0-9]
-LETTER      [a-zA-Z]
+LETTER      [A-Za-zÁÉÍÓÚáéíóúÀàÂÊÔâêôÃÕãõÇç]
 IDENT  		{LETTER}({LETTER}|{DIGIT}|_)*
 NUMBER      {DIGIT}+
 SPACE       [ ]
