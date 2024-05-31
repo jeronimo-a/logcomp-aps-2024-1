@@ -58,7 +58,6 @@ EOL     	[\n]
 "<="						{ return LESS_EQUAL; }
 "+"							{ return ADD; }
 "-"							{ return SUB; }
-".."						{ return CAT; }
 "*"							{ return MULT; }
 "/"							{ return DIV; }
 "not"						{ return NOT; }

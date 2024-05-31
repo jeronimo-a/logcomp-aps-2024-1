@@ -14,7 +14,6 @@ int yylex();
 
 %token <num> NUMBER
 %token <str> IDENT
-%token <str> STRING
 
 /* declare tokens */
 %token AA_ROOF
@@ -55,7 +54,6 @@ int yylex();
 %token LESS_EQUAL
 %token ADD
 %token SUB
-%token CAT
 %token MULT
 %token DIV
 %token NOT
@@ -105,7 +103,6 @@ COMPARATOR:
 LEAST_PRECENDECE_BINOP:
     ADD
     | SUB
-    | CAT
     ;
 
 MOST_PRECEDENCE_BINOP:
@@ -213,7 +210,6 @@ TERM:
 
 FACTOR:
     NUMBER
-    | STRING
     | IDENT
     | UNOP FACTOR
     | OPENPAR B_EXPRESSION CLOSEPAR
