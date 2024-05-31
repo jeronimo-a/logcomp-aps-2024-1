@@ -8,13 +8,12 @@ Parser: TIPOS DE STATEMENT
 		chamada de elevador
 		entrada de elevador
 		saída de elevador
-		apertar botão para piso de número (todos menos o térreo)
+		apertar botão para piso de número   # excluir o número 0
 		subir escadas
 		descer escadas		
 
 	Quebrado:
-		VARDEC com ASSIGN
-		ASSIGN
-		WHILE
-		IF
-		apertar o botão para o térreo
+		VARDEC com ASSIGN   # problema é no B_EXPRESSION
+		ASSIGN              # problema é no B_EXPRESSION
+		WHILE               # problema é no TABBED_STAT_BLOCK
+		IF                  # problema é no TABBED_STAT_BLOCK
