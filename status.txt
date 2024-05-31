@@ -1,0 +1,20 @@
+Parser: TIPOS DE STATEMENT
+
+	Funcionando:
+		INPUT ASCII art funcionando 100%
+		VARDEC sem ASSIGN
+		OUTPUT do andar do usuário funcionando, mas as interrogações tem q estar separadas do estou
+		OUTPUT do andar do elevador funcionando, // // // // //
+		chamada de elevador
+		entrada de elevador
+		saída de elevador
+		apertar botão para piso de número (todos menos o térreo)
+		subir escadas
+		descer escadas		
+
+	Quebrado:
+		VARDEC com ASSIGN
+		ASSIGN
+		WHILE
+		IF
+		apertar o botão para o térreo

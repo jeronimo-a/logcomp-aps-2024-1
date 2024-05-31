@@ -68,10 +68,14 @@ int yylex();
 
 %%
 
+PREBLOCK:
+    INPUT BLOCK
+    | EOL PREBLOCK
+    ;
+
 BLOCK:
-    EOL BLOCK
-    | INPUT STATEMENT
-    | INPUT STATEMENT BLOCK
+    STATEMENT BLOCK
+    | /* empty */
     ;
 
 INPUT:
@@ -118,7 +122,7 @@ TABBED_STAT_BLOCK:
     ;
 
 STATEMENT:
-    EOL STATEMENT
+    EOL
     | ASSIGN_STAT EOL
     | PRINT_STAT EOL
     | WHILE_STAT EOL
