@@ -1,4 +1,4 @@
-Parser: TIPOS DE STATEMENT
+Parser:
 
 	Funcionando:
 		INPUT ASCII art funcionando 100%
@@ -11,9 +11,11 @@ Parser: TIPOS DE STATEMENT
 		apertar botão para piso de número   # excluir o número 0
 		subir escadas
 		descer escadas		
-        WHILE
-        IF
+		WHILE
+		IF
+		VARDEC com ASSIGN
+		ASSIGN
 
 	Quebrado:
-		VARDEC com ASSIGN   # problema é no B_EXPRESSION
-		ASSIGN              # problema é no B_EXPRESSION
+		IDENT com acento não funciona, dá erro de parsing
+		strings	
