@@ -65,6 +65,8 @@ EOL     	[\n]
 "("							{ return OPENPAR; }
 ")"							{ return CLOSEPAR; }
 "ground"					{ return GROUND; }
+"end"                       { return END; }
+"\t"                        { return TAB; }
 {EOL}						{ return EOL; }
 {NUMBER}                    { yylval.num = atoi(yytext); return NUMBER; }
 {IDENT}                    	{ yylval.str = strdup(yytext); return IDENT; }

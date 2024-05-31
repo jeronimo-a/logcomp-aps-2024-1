@@ -11,9 +11,9 @@ Parser: TIPOS DE STATEMENT
 		apertar botão para piso de número   # excluir o número 0
 		subir escadas
 		descer escadas		
+        WHILE
+        IF
 
 	Quebrado:
 		VARDEC com ASSIGN   # problema é no B_EXPRESSION
 		ASSIGN              # problema é no B_EXPRESSION
-		WHILE               # problema é no TABBED_STAT_BLOCK
-		IF                  # problema é no TABBED_STAT_BLOCK

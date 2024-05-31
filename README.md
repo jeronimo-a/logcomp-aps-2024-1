@@ -30,8 +30,8 @@ STATEMENT = {"\n"}, (ASSIGN_STAT | PRINT_STAT | WHILE_STAT | IF_STAT | DECLARE_S
 
 ASSIGN_STAT  = "pombo", ident, "agora", "is", B_EXPRESSION;
 PRINT_STAT   = "where", ("estou" | "está"), "?", "?", "?";
-WHILE_STAT   = "enquanto", "waiting", "elevador", "\n", {TABBED_STAT, "\n"};
-IF_STAT      = "térreo", "?", "?", "?", "\n", {TABBED_STAT}; 
+WHILE_STAT   = "enquanto", "waiting", "elevador", "\n", {STATEMENT}, "end";
+IF_STAT      = "térreo", "?", "?", "?", "\n", {STATEMENT}, "end"; 
 DECLARE_STAT = "grab", "pombo", ident, ["é", B_EXPRESSION];
 CALL_STAT    = "call", "elevador";
 ENTER_STAT   = "enter", "elevador";
