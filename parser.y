@@ -74,7 +74,8 @@ PREBLOCK:
     ;
 
 BLOCK:
-    STATEMENT BLOCK
+    STATEMENT EOL BLOCK
+    | STATEMENT
     | /* empty */
     ;
 
@@ -122,18 +123,17 @@ TABBED_STAT_BLOCK:
     ;
 
 STATEMENT:
-    EOL
-    | ASSIGN_STAT EOL
-    | PRINT_STAT EOL
-    | WHILE_STAT EOL
-    | IF_STAT EOL
-    | DECLARE_STAT EOL
-    | CALL_STAT EOL
-    | ENTER_STAT EOL
-    | LEAVE_STAT EOL
-    | PUSH_STAT EOL
-    | UP_STAT EOL
-    | DOWN_STAT EOL
+    | ASSIGN_STAT
+    | PRINT_STAT
+    | WHILE_STAT
+    | IF_STAT
+    | DECLARE_STAT
+    | CALL_STAT
+    | ENTER_STAT
+    | LEAVE_STAT
+    | PUSH_STAT
+    | UP_STAT
+    | DOWN_STAT
     ;
 
 ASSIGN_STAT:
