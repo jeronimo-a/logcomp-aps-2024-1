@@ -5,7 +5,7 @@ ground_floor = "__|_#_|__";
 INPUT = roof, "\n", story, ["$"], "\n", {story, ["$"], "\n"}, ground_floor, ["$"], "\n";
 
 BLOCK = INPUT, {STATEMENT};
-STATEMENT = ((ASSIGN_STAT | PRINT_STAT | WHILE_STAT | IF_STAT | DECLARE_STAT | CALL_STAT | ENTER_STAT | LEAVE_STAT | PUSH_STAT | UP_STAT | DOWN_STAT | LITERAL_PRINT_STAT), ("\n" | EOF)) | "\n";
+STATEMENT = ((ASSIGN_STAT | PRINT_STAT | WHILE_STAT | IF_STAT | DECLARE_STAT | CALL_STAT | ENTER_STAT | LEAVE_STAT | PUSH_STAT | UP_STAT | DOWN_STAT | AUXILIARY_PRINT_STAT), ("\n" | EOF)) | "\n";
 
 ASSIGN_STAT          = "pombo", ident, "agora", "is", B_EXPRESSION;
 PRINT_STAT           = "where", ("estou" | "está"), "?", "?", "?";
@@ -18,7 +18,7 @@ LEAVE_STAT           = "leave", "elevador";
 PUSH_STAT            = "push", "botão", "for", "o", story_number, "piso";
 UP_STAT              = "subir", "stairs";
 DOWN_STAT            = "descer", "stairs";
-LITERAL_PRINT_STAT   = "show", B_EXPRESSION;
+AUXILIARY_PRINT_STAT = "show", B_EXPRESSION;
 
 B_EXPRESSION = B_TERM, {"or", B_TERM};
 B_TERM       = R_EXPRESSION, {"and", R_EXPRESSION};
