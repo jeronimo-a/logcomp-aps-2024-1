@@ -1,8 +1,33 @@
 %{
-#include <stdio.h>
+    #include <stdio.h>
 
-void yyerror(const char *s);
-int yylex();
+    void yyerror(const char *s);
+    int yylex();
+
+    int n_floors = -1;
+    int starting_floor = -1;
+
+    // ação chamada sempre que um piso novo é identificado
+    int new_floor(int selector) {
+        if (selector) {
+            if (starting_floor != -1) {
+                printf("Piso inicial definido mais de uma vez.\n");
+                return 1;
+            }
+            starting_floor = n_floors;
+        }
+        n_floors++;
+        return 0;
+    }
+
+    // ação chamada quando o piso térreo é identificado
+    int ground_floor(int selector) {
+        int result = new_floor(selector);
+        if (result) { return 1; }
+        starting_floor -= n_floors - 1;
+        starting_floor *= -1;
+        return 0;
+    }
 %}
 
 %locations
@@ -69,7 +94,7 @@ int yylex();
 %%
 
 PREBLOCK:
-    INPUT BLOCK
+    INPUT BLOCK     { if (starting_floor == -1) { printf("Sem seletor\n"); return 1; } }
     | EOL PREBLOCK
     ;
 
@@ -81,15 +106,15 @@ BLOCK:
     ;
 
 INPUT:
-    AA_ROOF EOL NEW_AA_STORY AA_GROUND_FLOOR EOL
-    | AA_ROOF EOL NEW_AA_STORY AA_GROUND_FLOOR AA_SELECTOR EOL
+    AA_ROOF EOL NEW_AA_STORY AA_GROUND_FLOOR EOL                { int result = ground_floor(0); if (result) { return 1; } }
+    | AA_ROOF EOL NEW_AA_STORY AA_GROUND_FLOOR AA_SELECTOR EOL  { int result = ground_floor(1); if (result) { return 1; } }
     ;
 
 NEW_AA_STORY:
-    AA_STORY EOL
-    | AA_STORY AA_SELECTOR EOL
-    | AA_STORY EOL NEW_AA_STORY
-    | AA_STORY AA_SELECTOR EOL NEW_AA_STORY
+    AA_STORY EOL                                { int result = new_floor(0); if (result) { return 1; } }
+    | AA_STORY AA_SELECTOR EOL                  { int result = new_floor(1); if (result) { return 1; } }
+    | AA_STORY EOL NEW_AA_STORY                 { int result = new_floor(0); if (result) { return 1; } }
+    | AA_STORY AA_SELECTOR EOL NEW_AA_STORY     { int result = new_floor(1); if (result) { return 1; } }
     ;
 
 COMPARATOR:
@@ -227,9 +252,11 @@ FACTOR:
 
 int main() {
     if (!yyparse()) {
-        printf("Parsing successful!\n");
+        printf("Floors: %d\n", n_floors);
+        printf("Start: %d\n", starting_floor);
+        printf("Parsing bem sucedido!\n");
     } else {
-        printf("Parsing failed!\n");
+        printf("Parsing mal sucedido!\n");
     }
     return 0;
 }
