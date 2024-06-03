@@ -26,19 +26,20 @@ BLOCK = INPUT, {STATEMENT};
 
 TABBED_STAT  = "\t", STATEMENT;
 
-STATEMENT = {"\n"}, (ASSIGN_STAT | PRINT_STAT | WHILE_STAT | IF_STAT | DECLARE_STAT | CALL_STAT | ENTER_STAT | LEAVE_STAT | PUSH_STAT | UP_STAT | DOWN_STAT), "\n";
+STATEMENT = {"\n"}, (ASSIGN_STAT | PRINT_STAT | WHILE_STAT | IF_STAT | DECLARE_STAT | CALL_STAT | ENTER_STAT | LEAVE_STAT | PUSH_STAT | UP_STAT | DOWN_STAT | LITERAL_PRINT_STAT), "\n";
 
-ASSIGN_STAT  = "pombo", ident, "agora", "is", B_EXPRESSION;
-PRINT_STAT   = "where", ("estou" | "está"), "?", "?", "?";
-WHILE_STAT   = "enquanto", "waiting", "elevador", "\n", {STATEMENT}, "end";
-IF_STAT      = "térreo", "?", "?", "?", "\n", {STATEMENT}, "end"; 
-DECLARE_STAT = "grab", "pombo", ident, ["é", B_EXPRESSION];
-CALL_STAT    = "call", "elevador";
-ENTER_STAT   = "enter", "elevador";
-LEAVE_STAT   = "leave", "elevador";
-PUSH_STAT    = "push", "botão", "for", "o", story_number, "piso";
-UP_STAT      = "subir", "stairs";
-DOWN_STAT    = "descer", "stairs";
+ASSIGN_STAT          = "pombo", ident, "agora", "is", B_EXPRESSION;
+PRINT_STAT           = "where", ("estou" | "está"), "?", "?", "?";
+WHILE_STAT           = "enquanto", "waiting", "elevador", "\n", {STATEMENT}, "end";
+IF_STAT              = "térreo", "?", "?", "?", "\n", {STATEMENT}, "end"; 
+DECLARE_STAT         = "grab", "pombo", ident, ["é", B_EXPRESSION];
+CALL_STAT            = "call", "elevador";
+ENTER_STAT           = "enter", "elevador";
+LEAVE_STAT           = "leave", "elevador";
+PUSH_STAT            = "push", "botão", "for", "o", story_number, "piso";
+UP_STAT              = "subir", "stairs";
+DOWN_STAT            = "descer", "stairs";
+LITERAL_PRINT_STAT   = "show", B_EXPRESSION;
 
 B_EXPRESSION = B_TERM, {"or", B_TERM};
 B_TERM       = R_EXPRESSION, {"and", R_EXPRESSION};

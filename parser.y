@@ -44,6 +44,7 @@ int yylex();
 %token SUBIR_ESCADA_1
 %token DESCER_ESCADA_1
 %token SUBIR_DESCER_ESCADA_2
+%token LITERAL_PRINT_1
 %token OR
 %token AND
 %token EQUAL
@@ -128,6 +129,7 @@ STATEMENT:
     | PUSH_STAT
     | UP_STAT
     | DOWN_STAT
+    | LITERAL_PRINT_STAT
     ;
 
 // pombo IDENT agora is B_EXPRESSION
@@ -181,6 +183,10 @@ UP_STAT:
 
 DOWN_STAT:
     DESCER_ESCADA_1 SUBIR_DESCER_ESCADA_2
+    ;
+
+LITERAL_PRINT_STAT:
+    LITERAL_PRINT_1 B_EXPRESSION
     ;
 
 B_EXPRESSION:

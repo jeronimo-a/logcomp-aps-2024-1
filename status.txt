@@ -15,5 +15,6 @@ Parser:
 		IF
 		VARDEC com ASSIGN
 		ASSIGN
+		LITERAL_PRINT
 
 	Quebrado:
