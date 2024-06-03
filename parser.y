@@ -4,30 +4,15 @@
     void yyerror(const char *s);
     int yylex();
 
+    int default_starting_floor_value = -5;
     int n_floors = -1;
-    int starting_floor = -1;
+    int starting_floor;
 
     // ação chamada sempre que um piso novo é identificado
-    int new_floor(int selector) {
-        if (selector) {
-            if (starting_floor != -1) {
-                printf("Piso inicial definido mais de uma vez.\n");
-                return 1;
-            }
-            starting_floor = n_floors;
-        }
-        n_floors++;
-        return 0;
-    }
+    int new_floor(int selector);
 
     // ação chamada quando o piso térreo é identificado
-    int ground_floor(int selector) {
-        int result = new_floor(selector);
-        if (result) { return 1; }
-        starting_floor -= n_floors - 1;
-        starting_floor *= -1;
-        return 0;
-    }
+    int ground_floor(int selector);
 %}
 
 %locations
@@ -94,7 +79,7 @@
 %%
 
 PREBLOCK:
-    INPUT BLOCK     { if (starting_floor == -1) { printf("Sem seletor\n"); return 1; } }
+    INPUT BLOCK
     | EOL PREBLOCK
     ;
 
@@ -251,6 +236,7 @@ FACTOR:
 %%
 
 int main() {
+    starting_floor = default_starting_floor_value;
     if (!yyparse()) {
         printf("Floors: %d\n", n_floors);
         printf("Start: %d\n", starting_floor);
@@ -261,7 +247,47 @@ int main() {
     return 0;
 }
 
-yyerror(char *s)
-{
+yyerror(char *s) {
   fprintf(stderr, "error: %s\n", s);
+}
+
+// ação chamada quando um novo piso é identificado
+int new_floor(int selector) {
+
+    // se houver seletor no piso identificado
+    if (selector) {
+
+        // verifica se em algum outro piso anterior teve seletor
+        if (starting_floor != default_starting_floor_value) {
+            printf("Piso inicial definido mais de uma vez.\n");
+            return 1;
+        }
+
+        // atualiza o valor do piso inicial do elevador
+        starting_floor = n_floors;
+    }
+
+    // atualiza a quantidade de pisos
+    n_floors++;
+    
+    return 0;
+}
+
+// ação chamada quando o piso térreo é identificado
+int ground_floor(int selector) {
+
+    // chama a subrotina que lida com um piso novo qualquer
+    int result = new_floor(selector);
+    if (result) { return 1; }
+    
+    // verifica se foi inserido o seletor
+    if (starting_floor == default_starting_floor_value) {
+        printf("Sem seletor da posição inicial do elevador.\n"); return 1;
+    }
+
+    // atualiza a posição inicial do elevador
+    starting_floor += 2;
+    if (selector) { starting_floor = 0; }
+
+    return 0;
 }
