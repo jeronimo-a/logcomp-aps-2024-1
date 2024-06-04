@@ -1,0 +1,3 @@
+[submodule "compilador"]
+	path = compilador
+	url = git@github.com:jeronimo-a/logcomp-2024-1.git
