@@ -25,13 +25,13 @@ Tradutor:
 	Criação das variáveis de andar inicial e altura do prédio
 	Criação das variáveis de posição do elevador e do usuário
 	Criação da bandeira de usuário no elevador
-	Função de verificar se o usuário está no telhado
 	Função de subir as escadas
-
-	Fazer:
 	Função de descer as escadas
 	Função de chamar o elevador
+
+	Fazer:
 	Função de entrar no elevador
+	Função de movimentar o elevador
 	Função de sair do elevador
 	Tradução do statement VARDEC
 	Tradução do statement ASSIGN
