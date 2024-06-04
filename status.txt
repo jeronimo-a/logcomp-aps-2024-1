@@ -29,9 +29,9 @@ Tradutor:
 	Função de descer as escadas
 	Função de chamar o elevador
 	Função de entrar no elevador
+	Função de movimentar o elevador
 
 	Fazer:
-	Função de movimentar o elevador
 	Função de sair do elevador
 	Tradução do statement VARDEC
 	Tradução do statement ASSIGN

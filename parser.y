@@ -341,8 +341,9 @@ int write_input_vars_and_main_functions() {
 
     // função de chamar o elevador
     fprintf(dest_file, "function CallElevator(floor)\n");
-    fprintf(dest_file, "\tELEVATOR_WANTED_POSITION = floor\n");
-    fprintf(dest_file, "end\n");
+    fprintf(dest_file, "\tif floor > -1 and floor < N_FLOORS + 1 then\n");
+    fprintf(dest_file, "\t\tELEVATOR_WANTED_POSITION = floor\n");
+    fprintf(dest_file, "\tend\nend\n");
 
     // função de verificar se a posição do elevador é a mesma do usuário
     fprintf(dest_file, "function IsElevatorOnUserFloor()\n");
@@ -353,6 +354,15 @@ int write_input_vars_and_main_functions() {
     fprintf(dest_file, "function EnterElevator()\n");
     fprintf(dest_file, "\tif IsElevatorOnUserFloor() then\n");
     fprintf(dest_file, "\t\tIS_USER_IN_ELEVATOR = 1\n");
+    fprintf(dest_file, "\tend\nend\n");
+
+    // função de movimentar o elevador
+    fprintf(dest_file, "function MoveElevator()\n");
+    fprintf(dest_file, "\tif ELEVATOR_POSITION < ELEVATOR_WANTED_POSITION then\n");
+    fprintf(dest_file, "\t\tELEVATOR_POSITION = ELEVATOR_POSITION + 1\n");
+    fprintf(dest_file, "\tend\n");
+    fprintf(dest_file, "\tif ELEVATOR_POSITION > ELEVATOR_WANTED_POSITION then\n");
+    fprintf(dest_file, "\t\tELEVATOR_POSITION = ELEVATOR_POSITION - 1\n");
     fprintf(dest_file, "\tend\nend\n");
 
     return 0;
