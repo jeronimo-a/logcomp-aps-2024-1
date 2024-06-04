@@ -1,6 +1,7 @@
 import sys
 
 SIGNAL = "### SIGNAL ###"
+SKIP_MOVE_SIGNAL = "### SKIP MOVE ###"
 
 def main():
     source = sys.argv[1]
@@ -42,7 +43,8 @@ def main():
         # se for fechamento de escopo, faz um pop na stack de escopos e adiciona um MoveElevator()
         if is_end:
             scope_stack.pop()
-            new_text += "MoveElevator()\n"
+            if SKIP_MOVE_SIGNAL not in line: new_text += "MoveElevator()\n"
+            else: line = line.replace(SKIP_MOVE_SIGNAL, "")
             added = True
 
         # adiciona a linha ao programa atualizado

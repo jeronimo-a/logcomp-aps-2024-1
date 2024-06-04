@@ -154,7 +154,7 @@ STATEMENT:
 
 // pombo IDENT agora is B_EXPRESSION
 ASSIGN_STAT:
-    ASSIGN_1_VARDEC_2 IDENT { if (assign($2)) { return 1; } } ASSIGN_2 ASSIGN_3 B_EXPRESSION
+    ASSIGN_1_VARDEC_2 IDENT { if (assign($2)) { return 1; } } ASSIGN_2 ASSIGN_3 B_EXPRESSION { fprintf(DEST_FILE, "\nend ### SKIP MOVE ###"); }
     ;
 
 PRINT_STAT:
@@ -412,7 +412,8 @@ int vardec(char *key, int assign) {
 }
 
 int assign(char *key) {
-    fprintf(DEST_FILE, "%s =", key);
+    fprintf(DEST_FILE, "if IsUserOnGroundLevel() then\n");
+    fprintf(DEST_FILE, "\t%s =", key);
     return 0;
 }
 
