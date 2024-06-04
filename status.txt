@@ -32,6 +32,8 @@ Tradutor:
 		Função de movimentar o elevador
 		Função de sair do elevador
 		Tradução do statement VARDEC
+		Tradução do statement ASSIGN
+		Tradução do statement PRINT
 
 	Fazer:
-		Tradução do statement ASSIGN
+		Tradução do WHILE
