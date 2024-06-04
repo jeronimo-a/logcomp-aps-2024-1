@@ -13,7 +13,8 @@ FILE *DEST_FILE;
 int new_floor(int selector);                // ação chamada sempre que um piso novo é identificado
 int ground_floor(int selector);             // ação chamada quando o piso térreo é identificado
 int write_input_vars_and_main_functions();  // ação que é chamada ao final do input, define as variáveis do input
-int vardec(char *key);                      // declaração de variável
+int vardec(char *key, int assign);          // declaração de variável
+int assign(char *key);                      // atribuição pura de variável
 
 %}
 
@@ -86,9 +87,9 @@ PREBLOCK:
     ;
 
 BLOCK:
-    STATEMENT EOL BLOCK     // STATEMENT seguido de um outro STATEMENT
-    | STATEMENT EOL
-    | STATEMENT             // STATEMENT final do BLOCK
+    STATEMENT EOL { fprintf(DEST_FILE, "\n"); } BLOCK     // STATEMENT seguido de um outro STATEMENT
+    | STATEMENT EOL { fprintf(DEST_FILE, "\n"); }
+    | STATEMENT { fprintf(DEST_FILE, "\n"); }             // STATEMENT final do BLOCK
     | /* empty */
     ;
 
@@ -114,19 +115,19 @@ COMPARATOR:
     ;
 
 LEAST_PRECENDECE_BINOP:
-    ADD
-    | SUB
+    ADD     { fprintf(DEST_FILE, " +"); }
+    | SUB   { fprintf(DEST_FILE, " -"); }
     ;
 
 MOST_PRECEDENCE_BINOP:
-    MULT
-    | DIV
+    MULT    { fprintf(DEST_FILE, " *"); }
+    | DIV   { fprintf(DEST_FILE, " /"); }
     ;
 
 UNOP:
-    ADD
-    | SUB
-    | NOT
+    ADD     { fprintf(DEST_FILE, " +"); }
+    | SUB   { fprintf(DEST_FILE, " -"); }
+    | NOT   { fprintf(DEST_FILE, " not"); }
     ;
 
 STATEMENT:
@@ -146,7 +147,7 @@ STATEMENT:
 
 // pombo IDENT agora is B_EXPRESSION
 ASSIGN_STAT:
-    ASSIGN_1_VARDEC_2 IDENT ASSIGN_2 ASSIGN_3 B_EXPRESSION
+    ASSIGN_1_VARDEC_2 IDENT { if (assign($2)) { return 1; } } ASSIGN_2 ASSIGN_3 B_EXPRESSION
     ;
 
 PRINT_STAT:
@@ -166,8 +167,8 @@ IF_STAT:
 
 // grab pombo IDENT é B_EXPRESSION ou grab pombo IDENT
 DECLARE_STAT:
-    VARDEC_1 ASSIGN_1_VARDEC_2 IDENT VARDEC_ASSIGN B_EXPRESSION { if (vardec($3)) { return 1; } }
-    | VARDEC_1 ASSIGN_1_VARDEC_2 IDENT                          { if (vardec($3)) { return 1; } }
+    VARDEC_1 ASSIGN_1_VARDEC_2 IDENT { if (vardec($3, 1)) { return 1; } } VARDEC_ASSIGN B_EXPRESSION
+    | VARDEC_1 ASSIGN_1_VARDEC_2 IDENT { if (vardec($3, 0)) { return 1; } }
     ;
 
 CALL_STAT:
@@ -227,12 +228,12 @@ TERM:
     ;
 
 FACTOR:
-    NUMBER
-    | IDENT
+    NUMBER                          { fprintf(DEST_FILE, " %d", $1); }
+    | IDENT                         { fprintf(DEST_FILE, " %s", $1); }
     | UNOP FACTOR
     | OPENPAR B_EXPRESSION CLOSEPAR
-    | PRINT_1 PRINT_2_PESSOA
-    | PRINT_1 PRINT_2_ELEVADOR
+    | PRINT_1 PRINT_2_PESSOA        { fprintf(DEST_FILE, " USER_POSITION"); }
+    | PRINT_1 PRINT_2_ELEVADOR      { fprintf(DEST_FILE, " ELEVATOR_POSITION"); }
     ;
 
 %%
@@ -377,7 +378,13 @@ int write_input_vars_and_main_functions() {
     return 0;
 }
 
-int vardec(char *key) {
-    fprintf(DEST_FILE, "local %s\n", key);
+int vardec(char *key, int assign) {
+    fprintf(DEST_FILE, "local %s", key);
+    if (assign) { fprintf(DEST_FILE, " ="); }
+    return 0;
+}
+
+int assign(char *key) {
+    fprintf(DEST_FILE, "%s =", key);
     return 0;
 }
