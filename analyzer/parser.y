@@ -252,7 +252,7 @@ FACTOR:
 int main() {
 
     // abre/cria o arquivo do código intermediário em Lua
-    DEST_FILE = fopen(".intermediate.lua", "w");
+    DEST_FILE = fopen("analyzer/.intermediate.lua", "w");
     if (DEST_FILE == NULL) {
         fprintf(stderr, "Erro ao abrir o arquivo intermediário.");
         return 1;

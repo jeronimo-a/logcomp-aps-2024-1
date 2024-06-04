@@ -21,5 +21,5 @@ No começo de cada arquivo de código, o programador deve especificar o número 
 2. Para rodar código fonte `./run sample_code.jj`
 
 ### Exemplos:
-1. `examplo1.jj` potencialização de números inteiros
-2. `examplo2.jj` 
+1. `examples/example1.jj` potencialização de números inteiros
+2. `examples/examplo2.jj` 
