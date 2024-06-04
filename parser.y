@@ -66,6 +66,7 @@ int assign(char *key);                      // atribuição pura de variável
 %token NOT_EQUAL
 %token GREATER_EQUAL
 %token LESS_EQUAL
+%token NOOP
 %token ADD
 %token SUB
 %token MULT
@@ -143,6 +144,7 @@ STATEMENT:
     | UP_STAT
     | DOWN_STAT
     | LITERAL_PRINT_STAT
+    | NOOP                  { fprintf(DEST_FILE, "NoOp()"); }
     ;
 
 // pombo IDENT agora is B_EXPRESSION
@@ -373,6 +375,11 @@ int write_input_vars_and_main_functions() {
     // função de sair do elevador
     fprintf(DEST_FILE, "function LeaveElevator()\n");
     fprintf(DEST_FILE, "\tIS_USER_IN_ELEVATOR = 0\n");
+    fprintf(DEST_FILE, "end\n");
+
+    // função de no op
+    fprintf(DEST_FILE, "function NoOp()\n");
+    fprintf(DEST_FILE, "\treturn 0\n");
     fprintf(DEST_FILE, "end\n");
 
     // sinal para o pósprocessador

@@ -66,6 +66,7 @@ EOL     	[\n]
 ")"							{ return CLOSEPAR; }
 "ground"					{ return GROUND; }
 "end"                       { return END; }
+"tédio"                     { return NOOP; }
 "\t"                        { return TAB; }
 {EOL}						{ return EOL; }
 {NUMBER}                    { yylval.num = atoi(yytext); return NUMBER; }
