@@ -37,37 +37,38 @@ __|_#_|__       % térreo
 % que são o piso inicial do elevador e a quantidade de andares, respectivamente
 
 % o primeiro passo é definir a variável de acúmulo da multiplicação, o que só pode ser feito no telhado
-call elevador
-enquanto waiting elevador
-end
-enter elevador
-push botão for o N_FLOORS piso
-while esperando in elevador
-end
-leave elevador
-subir stairs
-grab pombo resultado é 1
+call elevador                       % chama o elevador
+enquanto waiting elevador           % loop while para esperar o elevador chegar, o elevador anda 1 andar a acada statement fora de qualquer cláusula
+end                                 % não faz nada enquanto isso
+enter elevador                      % após o elevador chegar, entra no elevador
+push botão for o N_FLOORS piso      % aperta o botão do último andar
+while esperando in elevador         % espera o elevador chegar com o loop while do tipo 2
+end                                 % não faz nada enquanto isso
+leave elevador                      % sai do elevador quando chegar
+subir stairs                        % sobe as escadas em direção ao telhado
+grab pombo resultado é 1            % define a variável do resultado
 
 % o segundo passo é descer até o térreo, que é o único lugar onde as variáveis podem ser alteradas
-descer stairs
-enter elevador
-push botão for o ground piso
-while esperando in elevador
-end
+descer stairs                   % desce do telhado
+enter elevador                  % pega o elevador, que não se moveu
+push botão for o ground piso    % apera o botão do térreo
+while esperando in elevador     % loop que espera o elevador chegar no térreo
+end                             % não faz nada enquanto isso acontece
 
 % o terceiro passo é mandar o elevador para o a sua posição original
-push botão for o STARTING_FLOOR piso
-leave elevador
-descer stairs
-while esperando in elevador
-end
+push botão for o STARTING_FLOOR piso    % manda o elevador para a posição original
+leave elevador                          % sai do elevador, terminando, então, no primeiro andar
+descer stairs                           % desce para o térreo
+while esperando in elevador             % enquanto o elevador não chega no andar de origem, espera
+end                                     % sem fazer nada
 
 % o quarto passo é multiplicar o fatorial pelo piso atual do elevador enquanto ele desce de novo ao térreo
-térreo???
-    call elevador
-    enquanto waiting elevador
-        pombo resultado agora is resultado * where está
+térreo???                                                   % se estiver no térreo
+    call elevador                                           % chama o elevador
+    enquanto waiting elevador                               % enquanto o elevador desce
+        pombo resultado agora is resultado * where está     % multiplica a variável do resultado pelo então andar do elevador
     end
 end
 
+% mostra o resultado
 show resultado
