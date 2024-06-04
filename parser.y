@@ -306,12 +306,12 @@ int ground_floor(int selector) {
     return 0;
 }
 
-// ação chamada após a conclusão do input, define as variáveis de input:
-// altura do prédio e posição inicial do elevador
+// ação chamada após a conclusão do input, define as variáveis globais da linguagem e as funções
 int write_input_vars_and_main_functions() {
     fprintf(dest_file, "local N_FLOORS = %d\n", n_floors);
     fprintf(dest_file, "local STARTING_FLOOR = %d\n", starting_floor);
     fprintf(dest_file, "local ELEVATOR_POSITION = STARTING_FLOOR\n");
     fprintf(dest_file, "local USER_POSITION = 0\n");
+    fprintf(dest_file, "local USER_IN_ELEVATOR = 0\n");
     return 0;
 }

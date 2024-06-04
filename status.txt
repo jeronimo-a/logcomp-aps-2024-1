@@ -24,9 +24,9 @@ Tradutor:
 	Feito:
 	Criação das variáveis de andar inicial e altura do prédio
 	Criação das variáveis de posição do elevador e do usuário
+	Criação da bandeira de usuário no elevador
 
 	Fazer:
-	Bandeira do usuário dentro do elevador
 	Função de subir as escadas
 	Função de descer as escadas
 	Função de chamar o elevador
