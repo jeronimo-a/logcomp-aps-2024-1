@@ -17,10 +17,9 @@ No começo de cada arquivo de código, o programador deve especificar o número 
 `language.ebnf`
 
 ### Utilização:
-Para rodar um código fonte `sample_code.jj`
-
-`./run sample_code.jj`
+1. Rodar `./setup` para configurar o módulo do interpretador
+2. Para rodar código fonte `./run sample_code.jj`
 
 ### Exemplos:
-1. `exemplo1.jj` potencialização de números inteiros
-2. `exemplo2.jj` 
+1. `examplo1.jj` potencialização de números inteiros
+2. `examplo2.jj` 
