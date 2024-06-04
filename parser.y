@@ -363,6 +363,9 @@ int write_input_vars_and_main_functions() {
     fprintf(dest_file, "\tend\n");
     fprintf(dest_file, "\tif ELEVATOR_POSITION > ELEVATOR_WANTED_POSITION then\n");
     fprintf(dest_file, "\t\tELEVATOR_POSITION = ELEVATOR_POSITION - 1\n");
+    fprintf(dest_file, "\tend\n");
+    fprintf(dest_file, "\tif IS_USER_IN_ELEVATOR then\n");
+    fprintf(dest_file, "\t\tUSER_POSITION = ELEVATOR_POSITION\n");
     fprintf(dest_file, "\tend\nend\n");
 
     return 0;
