@@ -17,12 +17,9 @@ No começo de cada arquivo de código, o programador deve especificar o número 
 `language.ebnf`
 
 ### Utilização:
-1. Fornecer o código fonte JJ para o analisador léxico e sintático:
-`./analyzer < sample_code.jj`
-2. Rodar o *script* de pós processamento e interpretação:
-`./script`
+Para rodar um código fonte `sample_code.jj`
 
-A `Makefile` também está disponível
+`./run sample_code.jj`
 
 ### Exemplos:
 1. `exemplo1.jj` potencialização de números inteiros

@@ -47,7 +47,7 @@ Tradutor:
 		Apertar o botão para andares não literais
 		Programa de exemplo 1
 		Guia de utilização
-		Pulimento
+		Pulimentow
 
 	Fazer:
 		Assign somente no térreo

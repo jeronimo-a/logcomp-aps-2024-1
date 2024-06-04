@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Check if the file parameter is provided
+if [ -z "$1" ]; then
+    echo "Usage: $0 <file>"
+    exit 1
+fi
+
+# Get the file from the first argument
+file="$1"
+
+# Check if the file exists
+if [ ! -f "$file" ]; then
+    echo "File not found: $file"
+    exit 1
+fi
+
+./analyzer < "$file"
+python3 postpro.py .intermediate.lua
+python3 compilador/main.py .intermediate.lua
+rm .intermediate.lua
