@@ -308,28 +308,52 @@ int ground_floor(int selector) {
 
 // ação chamada após a conclusão do input, define as variáveis globais da linguagem e as funções
 int write_input_vars_and_main_functions() {
+
+    // variáveis globais da linguagem
     fprintf(dest_file, "local N_FLOORS = %d\n", n_floors);
     fprintf(dest_file, "local STARTING_FLOOR = %d\n", starting_floor);
     fprintf(dest_file, "local ELEVATOR_POSITION = STARTING_FLOOR\n");
     fprintf(dest_file, "local USER_POSITION = 0\n");
-    fprintf(dest_file, "local USER_IN_ELEVATOR = 0\n");
+    fprintf(dest_file, "local IS_USER_IN_ELEVATOR = 0\n");
     fprintf(dest_file, "local ELEVATOR_WANTED_POSITION = STARTING_FLOOR\n");
-    fprintf(dest_file, "function is_user_on_roof()\n");
+
+    // função de verificar se o usuário está no telhado
+    fprintf(dest_file, "function IsUserOnRoof()\n");
     fprintf(dest_file, "\treturn USER_POSITION == N_FLOORS + 1\n");
     fprintf(dest_file, "end\n");
-    fprintf(dest_file, "function is_user_on_ground()\n");
+
+    // função de verificar se o usuário está no térreo
+    fprintf(dest_file, "function IsUserOnGroundLevel()\n");
     fprintf(dest_file, "\treturn USER_POSITION == 0\n");
     fprintf(dest_file, "end\n");
-    fprintf(dest_file, "function go_up_stairs()\n");
-    fprintf(dest_file, "\tif not is_user_on_roof() then\n");
+
+    // função de subir as escadas
+    fprintf(dest_file, "function GoUpStairs()\n");
+    fprintf(dest_file, "\tif not IsUserOnRoof() then\n");
     fprintf(dest_file, "\t\tUSER_POSITION = USER_POSITION + 1\n");
     fprintf(dest_file, "\tend\nend\n");
-    fprintf(dest_file, "function go_down_stairs()\n");
-    fprintf(dest_file, "\tif not is_user_on_ground() then\n");
+
+    // função de descer as escadas
+    fprintf(dest_file, "function GoDownStairs()\n");
+    fprintf(dest_file, "\tif not IsUserOnGroundLevel() then\n");
     fprintf(dest_file, "\t\tUSER_POSITION = USER_POSITION - 1\n");
     fprintf(dest_file, "\tend\nend\n");
-    fprintf(dest_file, "function call_elevator(floor)\n");
+
+    // função de chamar o elevador
+    fprintf(dest_file, "function CallElevator(floor)\n");
     fprintf(dest_file, "\tELEVATOR_WANTED_POSITION = floor\n");
     fprintf(dest_file, "end\n");
+
+    // função de verificar se a posição do elevador é a mesma do usuário
+    fprintf(dest_file, "function IsElevatorOnUserFloor()\n");
+    fprintf(dest_file, "\treturn USER_POSITION == ELEVATOR_POSITION\n");
+    fprintf(dest_file, "end\n");
+
+    // função de entrar no elevador
+    fprintf(dest_file, "function EnterElevator()\n");
+    fprintf(dest_file, "\tif IsElevatorOnUserFloor() then\n");
+    fprintf(dest_file, "\t\tIS_USER_IN_ELEVATOR = 1\n");
+    fprintf(dest_file, "\tend\nend\n");
+
     return 0;
 }
