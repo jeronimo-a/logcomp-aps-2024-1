@@ -8,11 +8,12 @@ int yylex();
 int default_starting_floor_value = -5;
 int n_floors = -1;
 int starting_floor;
-FILE *dest_file;
+FILE *DEST_FILE;
 
 int new_floor(int selector);                // ação chamada sempre que um piso novo é identificado
 int ground_floor(int selector);             // ação chamada quando o piso térreo é identificado
 int write_input_vars_and_main_functions();  // ação que é chamada ao final do input, define as variáveis do input
+int vardec(char *key);                      // declaração de variável
 
 %}
 
@@ -80,7 +81,7 @@ int write_input_vars_and_main_functions();  // ação que é chamada ao final do
 %%
 
 PREBLOCK:
-    INPUT BLOCK
+    INPUT { if (write_input_vars_and_main_functions()) { return 1; } } BLOCK
     | EOL PREBLOCK
     ;
 
@@ -92,8 +93,8 @@ BLOCK:
     ;
 
 INPUT:
-    AA_ROOF EOL NEW_AA_STORY AA_GROUND_FLOOR EOL                { if (ground_floor(0) || write_input_vars_and_main_functions()) { return 1; }; }
-    | AA_ROOF EOL NEW_AA_STORY AA_GROUND_FLOOR AA_SELECTOR EOL  { if (ground_floor(1) || write_input_vars_and_main_functions()) { return 1; }; }
+    AA_ROOF EOL NEW_AA_STORY AA_GROUND_FLOOR EOL                { if (ground_floor(0)) { return 1; }; }
+    | AA_ROOF EOL NEW_AA_STORY AA_GROUND_FLOOR AA_SELECTOR EOL  { if (ground_floor(1)) { return 1; }; }
     ; 
 
 NEW_AA_STORY:
@@ -165,8 +166,8 @@ IF_STAT:
 
 // grab pombo IDENT é B_EXPRESSION ou grab pombo IDENT
 DECLARE_STAT:
-    VARDEC_1 ASSIGN_1_VARDEC_2 IDENT VARDEC_ASSIGN B_EXPRESSION
-    | VARDEC_1 ASSIGN_1_VARDEC_2 IDENT
+    VARDEC_1 ASSIGN_1_VARDEC_2 IDENT VARDEC_ASSIGN B_EXPRESSION { if (vardec($3)) { return 1; } }
+    | VARDEC_1 ASSIGN_1_VARDEC_2 IDENT                          { if (vardec($3)) { return 1; } }
     ;
 
 CALL_STAT:
@@ -239,8 +240,8 @@ FACTOR:
 int main() {
 
     // abre/cria o arquivo do código intermediário em Lua
-    dest_file = fopen("intermediate.lua", "w");
-    if (dest_file == NULL) {
+    DEST_FILE = fopen("intermediate.lua", "w");
+    if (DEST_FILE == NULL) {
         fprintf(stderr, "Erro ao abrir o arquivo intermediário.");
         return 1;
     }
@@ -257,7 +258,7 @@ int main() {
         printf("Parsing mal sucedido!\n");
     }
 
-    fclose(dest_file);
+    fclose(DEST_FILE);
     return 0;
 }
 
@@ -310,68 +311,73 @@ int ground_floor(int selector) {
 int write_input_vars_and_main_functions() {
 
     // variáveis globais da linguagem
-    fprintf(dest_file, "local N_FLOORS = %d\n", n_floors);
-    fprintf(dest_file, "local STARTING_FLOOR = %d\n", starting_floor);
-    fprintf(dest_file, "local ELEVATOR_POSITION = STARTING_FLOOR\n");
-    fprintf(dest_file, "local USER_POSITION = 0\n");
-    fprintf(dest_file, "local IS_USER_IN_ELEVATOR = 0\n");
-    fprintf(dest_file, "local ELEVATOR_WANTED_POSITION = STARTING_FLOOR\n");
+    fprintf(DEST_FILE, "local N_FLOORS = %d\n", n_floors);
+    fprintf(DEST_FILE, "local STARTING_FLOOR = %d\n", starting_floor);
+    fprintf(DEST_FILE, "local ELEVATOR_POSITION = STARTING_FLOOR\n");
+    fprintf(DEST_FILE, "local USER_POSITION = 0\n");
+    fprintf(DEST_FILE, "local IS_USER_IN_ELEVATOR = 0\n");
+    fprintf(DEST_FILE, "local ELEVATOR_WANTED_POSITION = STARTING_FLOOR\n");
 
     // função de verificar se o usuário está no telhado
-    fprintf(dest_file, "function IsUserOnRoof()\n");
-    fprintf(dest_file, "\treturn USER_POSITION == N_FLOORS + 1\n");
-    fprintf(dest_file, "end\n");
+    fprintf(DEST_FILE, "function IsUserOnRoof()\n");
+    fprintf(DEST_FILE, "\treturn USER_POSITION == N_FLOORS + 1\n");
+    fprintf(DEST_FILE, "end\n");
 
     // função de verificar se o usuário está no térreo
-    fprintf(dest_file, "function IsUserOnGroundLevel()\n");
-    fprintf(dest_file, "\treturn USER_POSITION == 0\n");
-    fprintf(dest_file, "end\n");
+    fprintf(DEST_FILE, "function IsUserOnGroundLevel()\n");
+    fprintf(DEST_FILE, "\treturn USER_POSITION == 0\n");
+    fprintf(DEST_FILE, "end\n");
 
     // função de subir as escadas
-    fprintf(dest_file, "function GoUpStairs()\n");
-    fprintf(dest_file, "\tif not IsUserOnRoof() then\n");
-    fprintf(dest_file, "\t\tUSER_POSITION = USER_POSITION + 1\n");
-    fprintf(dest_file, "\tend\nend\n");
+    fprintf(DEST_FILE, "function GoUpStairs()\n");
+    fprintf(DEST_FILE, "\tif not IsUserOnRoof() then\n");
+    fprintf(DEST_FILE, "\t\tUSER_POSITION = USER_POSITION + 1\n");
+    fprintf(DEST_FILE, "\tend\nend\n");
 
     // função de descer as escadas
-    fprintf(dest_file, "function GoDownStairs()\n");
-    fprintf(dest_file, "\tif not IsUserOnGroundLevel() then\n");
-    fprintf(dest_file, "\t\tUSER_POSITION = USER_POSITION - 1\n");
-    fprintf(dest_file, "\tend\nend\n");
+    fprintf(DEST_FILE, "function GoDownStairs()\n");
+    fprintf(DEST_FILE, "\tif not IsUserOnGroundLevel() then\n");
+    fprintf(DEST_FILE, "\t\tUSER_POSITION = USER_POSITION - 1\n");
+    fprintf(DEST_FILE, "\tend\nend\n");
 
     // função de chamar o elevador
-    fprintf(dest_file, "function CallElevator(floor)\n");
-    fprintf(dest_file, "\tif floor > -1 and floor < N_FLOORS + 1 then\n");
-    fprintf(dest_file, "\t\tELEVATOR_WANTED_POSITION = floor\n");
-    fprintf(dest_file, "\tend\nend\n");
+    fprintf(DEST_FILE, "function CallElevator(floor)\n");
+    fprintf(DEST_FILE, "\tif floor > -1 and floor < N_FLOORS + 1 then\n");
+    fprintf(DEST_FILE, "\t\tELEVATOR_WANTED_POSITION = floor\n");
+    fprintf(DEST_FILE, "\tend\nend\n");
 
     // função de verificar se a posição do elevador é a mesma do usuário
-    fprintf(dest_file, "function IsElevatorOnUserFloor()\n");
-    fprintf(dest_file, "\treturn USER_POSITION == ELEVATOR_POSITION\n");
-    fprintf(dest_file, "end\n");
+    fprintf(DEST_FILE, "function IsElevatorOnUserFloor()\n");
+    fprintf(DEST_FILE, "\treturn USER_POSITION == ELEVATOR_POSITION\n");
+    fprintf(DEST_FILE, "end\n");
 
     // função de entrar no elevador
-    fprintf(dest_file, "function EnterElevator()\n");
-    fprintf(dest_file, "\tif IsElevatorOnUserFloor() then\n");
-    fprintf(dest_file, "\t\tIS_USER_IN_ELEVATOR = 1\n");
-    fprintf(dest_file, "\tend\nend\n");
+    fprintf(DEST_FILE, "function EnterElevator()\n");
+    fprintf(DEST_FILE, "\tif IsElevatorOnUserFloor() then\n");
+    fprintf(DEST_FILE, "\t\tIS_USER_IN_ELEVATOR = 1\n");
+    fprintf(DEST_FILE, "\tend\nend\n");
 
     // função de movimentar o elevador
-    fprintf(dest_file, "function MoveElevator()\n");
-    fprintf(dest_file, "\tif ELEVATOR_POSITION < ELEVATOR_WANTED_POSITION then\n");
-    fprintf(dest_file, "\t\tELEVATOR_POSITION = ELEVATOR_POSITION + 1\n");
-    fprintf(dest_file, "\tend\n");
-    fprintf(dest_file, "\tif ELEVATOR_POSITION > ELEVATOR_WANTED_POSITION then\n");
-    fprintf(dest_file, "\t\tELEVATOR_POSITION = ELEVATOR_POSITION - 1\n");
-    fprintf(dest_file, "\tend\n");
-    fprintf(dest_file, "\tif IS_USER_IN_ELEVATOR then\n");
-    fprintf(dest_file, "\t\tUSER_POSITION = ELEVATOR_POSITION\n");
-    fprintf(dest_file, "\tend\nend\n");
+    fprintf(DEST_FILE, "function MoveElevator()\n");
+    fprintf(DEST_FILE, "\tif ELEVATOR_POSITION < ELEVATOR_WANTED_POSITION then\n");
+    fprintf(DEST_FILE, "\t\tELEVATOR_POSITION = ELEVATOR_POSITION + 1\n");
+    fprintf(DEST_FILE, "\tend\n");
+    fprintf(DEST_FILE, "\tif ELEVATOR_POSITION > ELEVATOR_WANTED_POSITION then\n");
+    fprintf(DEST_FILE, "\t\tELEVATOR_POSITION = ELEVATOR_POSITION - 1\n");
+    fprintf(DEST_FILE, "\tend\n");
+    fprintf(DEST_FILE, "\tif IS_USER_IN_ELEVATOR then\n");
+    fprintf(DEST_FILE, "\t\tUSER_POSITION = ELEVATOR_POSITION\n");
+    fprintf(DEST_FILE, "\tend\nend\n");
 
     // função de sair do elevador
-    fprintf(dest_file, "function LeaveElevator()\n");
-    fprintf(dest_file, "\tIS_USER_IN_ELEVATOR = 0\n");
-    fprintf(dest_file, "end\n");
+    fprintf(DEST_FILE, "function LeaveElevator()\n");
+    fprintf(DEST_FILE, "\tIS_USER_IN_ELEVATOR = 0\n");
+    fprintf(DEST_FILE, "end\n");
 
+    return 0;
+}
+
+int vardec(char *key) {
+    fprintf(DEST_FILE, "local %s\n", key);
     return 0;
 }
