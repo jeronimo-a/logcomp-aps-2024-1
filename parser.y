@@ -196,8 +196,8 @@ LEAVE_STAT:
 
 // push botão for o NUMBER piso ou push botão for o ground piso
 PUSH_STAT:
-    PUSH_BUTTON_1 PUSH_BUTTON_2 PUSH_BUTTON_3 PUSH_BUTTON_4 NUMBER PUSH_BUTTON_5    { if (push_elevator_button($5)) { return 1; }; }
-    | PUSH_BUTTON_1 PUSH_BUTTON_2 PUSH_BUTTON_3 PUSH_BUTTON_4 GROUND PUSH_BUTTON_5  { if (push_elevator_button(0)) { return 1; }; }
+    PUSH_BUTTON_1 PUSH_BUTTON_2 PUSH_BUTTON_3 PUSH_BUTTON_4 { fprintf(DEST_FILE, "PushElevatorButton("); } B_EXPRESSION PUSH_BUTTON_5 { fprintf(DEST_FILE, ")"); }
+    | PUSH_BUTTON_1 PUSH_BUTTON_2 PUSH_BUTTON_3 PUSH_BUTTON_4 GROUND PUSH_BUTTON_5      { if (push_elevator_button(0)) { return 1; }; }
     ;
 
 // subir stairs 
@@ -262,11 +262,7 @@ int main() {
     starting_floor = default_starting_floor_value;
 
     // faz o parsing
-    if (!yyparse()) {
-        printf("Floors: %d\n", n_floors);
-        printf("Start: %d\n", starting_floor);
-        printf("Parsing bem sucedido!\n");
-    } else {
+    if (yyparse()) {
         printf("Parsing mal sucedido!\n");
     }
 

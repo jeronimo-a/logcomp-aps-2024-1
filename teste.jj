@@ -12,11 +12,29 @@ call elevador
 enquanto waiting elevador
 end
 enter elevador
-push botão for o 7 piso
+push botão for o N_FLOORS piso
 while esperando in elevador
 end
 leave elevador
 subir stairs
-where estou ???
-grab pombo carlos é 10
-show carlos
+grab pombo resultado é 1
+descer stairs
+enter elevador
+push botão for o ground piso
+while esperando in elevador
+end
+push botão for o STARTING_FLOOR piso
+leave elevador
+descer stairs
+where estou???
+while esperando in elevador
+end
+
+térreo???
+  call elevador
+  enquanto waiting elevador
+    pombo resultado agora is resultado * N_FLOORS
+  end
+end 
+
+show resultado
