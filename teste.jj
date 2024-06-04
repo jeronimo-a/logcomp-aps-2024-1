@@ -1,44 +1,13 @@
    _!_
+  |o o|
+  |o o|
   |o o| $
-  |o o|
-  |o o|
   |o o| 
   |o o|
   |o o|
   |o o|   
 __|_#_|__
 
-call elevador
-enquanto waiting elevador
-where estou ???
-where está ???
-end
-enter elevador
-push botão for o 7 piso
-where estou ???
-where estou ???
-where estou ???
-where estou ???
-where estou ???
-where estou ???
-where estou ???
-leave elevador
-push botão for o ground piso
-where está ???
-where está ???
-where está ???
-where está ???
-where está ???
-where está ???
-descer stairs
-call elevador
-where está ???
-enter elevador
-push botão for o ground piso
-where está ???
-where está ???
-where está ???
-where está ???
-where está ???
-where está ???
-where está ???
+grab pombo carlos
+pombo carlos agora is 10 / where está
+show carlos

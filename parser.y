@@ -202,7 +202,7 @@ DOWN_STAT:
     ;
 
 FREE_PRINT_STAT:
-    FREE_PRINT_1 B_EXPRESSION
+    FREE_PRINT_1 { fprintf(DEST_FILE, "print("); } B_EXPRESSION { fprintf(DEST_FILE, ")"); }
     ;
 
 B_EXPRESSION:
