@@ -1,0 +1,73 @@
+% Exemplo 2 de programa com a linguagem JJ
+
+% este programa calcula n fatorial
+% n é o andar inicial do usuário
+
+% os inputs são feitos exclusivamente pela ASCII art abaixo
+% existem apenas 2 parâmetros, a altura do prédio e o andar inicial do usuário
+% a altura do prédio é literalmente a altura da ASCII art em número de linhas
+% o andar inicial do usuário é definido com o uso do símbolo $ no andar em questão
+% o usuário pode começar em qualquer andar, menos no telhado
+
+% ######### INPUT ##############################################
+% calcula 12 fatorial
+
+   _!_          % telhado
+  |o o|         % 15º (último) andar
+  |o o|         % 14º andar
+  |o o|         % 13º andar
+  |o o|  $      % 12º andar
+  |o o|         % 11º andar
+  |o o|         % 10º andar
+  |o o|         % 9º andar
+  |o o|         % 8º andar
+  |o o|         % 7º andar
+  |o o|         % 6º andar
+  |o o|         % 5º andar
+  |o o|         % 4º andar
+  |o o|         % 3º andar, onde o usuário começa, neste caso
+  |o o|         % 2º andar
+  |o o|         % 1º andar
+__|_#_|__       % térreo
+
+% ######### PROGRAMA ###########################################
+
+% a linguagem tem algumas tem algumas variáveis padrão
+% neste exemplo, são utilizadas a STARTING_FLOOR e a N_FLOORS
+% que são o piso inicial do elevador e a quantidade de andares, respectivamente
+
+% o primeiro passo é definir a variável de acúmulo da multiplicação, o que só pode ser feito no telhado
+call elevador
+enquanto waiting elevador
+end
+enter elevador
+push botão for o N_FLOORS piso
+while esperando in elevador
+end
+leave elevador
+subir stairs
+grab pombo resultado é 1
+
+% o segundo passo é descer até o térreo, que é o único lugar onde as variáveis podem ser alteradas
+descer stairs
+enter elevador
+push botão for o ground piso
+while esperando in elevador
+end
+
+% o terceiro passo é mandar o elevador para o a sua posição original
+push botão for o STARTING_FLOOR piso
+leave elevador
+descer stairs
+while esperando in elevador
+end
+
+% o quarto passo é multiplicar o fatorial pelo piso atual do elevador enquanto ele desce de novo ao térreo
+térreo???
+    call elevador
+    enquanto waiting elevador
+        pombo resultado agora is resultado * where está
+    end
+end
+
+show resultado

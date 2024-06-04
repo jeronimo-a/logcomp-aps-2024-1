@@ -1,5 +1,5 @@
 lex.yy.c
 parser.tab.c
 parser.tab.h
-teste.txt
 .intermediate.lua
+status.txt
