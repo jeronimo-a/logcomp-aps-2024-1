@@ -13,13 +13,8 @@ enquanto waiting elevador
 end
 enter elevador
 push botão for o 7 piso
-where estou ???
-where estou ???
-where estou ???
-where estou ???
-where estou ???
-where estou ???
-where estou ???
+while esperando in elevador
+end
 leave elevador
 subir stairs
 where estou ???

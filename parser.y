@@ -43,6 +43,9 @@ int push_elevator_button(int floor);        // aperta o botão de dentro do elev
 %token WHILE_1
 %token WHILE_2
 %token WHILE_3_CALL_ENTER_LEAVE_2
+%token WHILE_2_1
+%token WHILE_2_2
+%token WHILE_2_3
 %token IF
 %token QUESTION
 %token VARDEC_1
@@ -136,6 +139,7 @@ STATEMENT:
     | ASSIGN_STAT
     | PRINT_STAT
     | WHILE_STAT
+    | WHILE_STAT_2
     | IF_STAT
     | DECLARE_STAT          { fprintf(DEST_FILE, "\nend"); }
     | CALL_STAT
@@ -162,6 +166,10 @@ PRINT_STAT:
 WHILE_STAT:
     WHILE_1 WHILE_2 WHILE_3_CALL_ENTER_LEAVE_2 EOL { fprintf(DEST_FILE, "while not IsElevatorOnUserFloor() do\n"); } BLOCK END { fprintf(DEST_FILE, "end"); }
     ;
+
+// while esperando in elevador EOL BLOCK END
+WHILE_STAT_2:
+    WHILE_2_1 WHILE_2_2 WHILE_2_3 WHILE_3_CALL_ENTER_LEAVE_2 EOL { fprintf(DEST_FILE, "while not IsElevatorStopped() do\n"); } BLOCK END { fprintf(DEST_FILE, "end"); }
 
 // térreo ??? EOL BLOCK END
 IF_STAT:
@@ -360,6 +368,11 @@ int write_input_vars_and_main_functions() {
     fprintf(DEST_FILE, "\tif IsElevatorOnUserFloor() then\n");
     fprintf(DEST_FILE, "\t\tIS_USER_IN_ELEVATOR = 1\n");
     fprintf(DEST_FILE, "\tend\nend\n");
+
+    // função de verificar se o elevador está no andar final
+    fprintf(DEST_FILE, "function IsElevatorStopped()\n");
+    fprintf(DEST_FILE, "\treturn ELEVATOR_POSITION == ELEVATOR_WANTED_POSITION\n");
+    fprintf(DEST_FILE, "end\n");
 
     // função de movimentar o elevador
     fprintf(DEST_FILE, "function MoveElevator()\n");

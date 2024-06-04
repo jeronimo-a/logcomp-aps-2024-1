@@ -43,5 +43,6 @@ Tradutor:
 		Print livre
 		Tradução do statement de subir e descer as escadas
 		Declaração de variáveis somente no telhado
+		While de esperar o elevador chegar no lugar certo
 
 	Fazer:

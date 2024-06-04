@@ -33,6 +33,9 @@ EOL     	[\n]
 "enquanto"					{ return WHILE_1; }
 "waiting"					{ return WHILE_2; }
 "elevador"					{ return WHILE_3_CALL_ENTER_LEAVE_2; }
+"while"					    { return WHILE_2_1; }
+"esperando"					{ return WHILE_2_2; }
+"in"					    { return WHILE_2_3; }
 "térreo"					{ return IF; }
 "?"							{ return QUESTION; }
 "grab"						{ return VARDEC_1; }
