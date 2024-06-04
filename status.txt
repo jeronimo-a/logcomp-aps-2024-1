@@ -39,6 +39,9 @@ Tradutor:
 		Tradução do statement de chamada, entrada e saida do elevador
 		NoOp
 		Script que insere MoveElevator entre cada linha
+		Tradução do statement PUSH BUTTON
+		Print livre
+		Tradução do statement de subir e descer as escadas
+		Declaração de variáveis somente no telhado
 
 	Fazer:
-		Tradução do statement PUSH BUTTON

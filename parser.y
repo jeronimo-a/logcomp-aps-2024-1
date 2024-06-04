@@ -137,7 +137,7 @@ STATEMENT:
     | PRINT_STAT
     | WHILE_STAT
     | IF_STAT
-    | DECLARE_STAT
+    | DECLARE_STAT          { fprintf(DEST_FILE, "\nend"); }
     | CALL_STAT
     | ENTER_STAT
     | LEAVE_STAT
@@ -194,11 +194,11 @@ PUSH_STAT:
 
 // subir stairs 
 UP_STAT:
-    SUBIR_ESCADA_1 SUBIR_DESCER_ESCADA_2
+    SUBIR_ESCADA_1 SUBIR_DESCER_ESCADA_2    { fprintf(DEST_FILE, "GoUpStairs()"); }
     ;
 
 DOWN_STAT:
-    DESCER_ESCADA_1 SUBIR_DESCER_ESCADA_2
+    DESCER_ESCADA_1 SUBIR_DESCER_ESCADA_2   { fprintf(DEST_FILE, "GoDownStairs()"); }
     ;
 
 FREE_PRINT_STAT:
@@ -396,7 +396,8 @@ int write_input_vars_and_main_functions() {
 }
 
 int vardec(char *key, int assign) {
-    fprintf(DEST_FILE, "local %s", key);
+    fprintf(DEST_FILE, "if IsUserOnRoof() then\n");
+    fprintf(DEST_FILE, "\tlocal %s", key);
     if (assign) { fprintf(DEST_FILE, " ="); }
     return 0;
 }
