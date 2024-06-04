@@ -30,8 +30,8 @@ Tradutor:
 	Função de chamar o elevador
 	Função de entrar no elevador
 	Função de movimentar o elevador
+	Função de sair do elevador
 
 	Fazer:
-	Função de sair do elevador
 	Tradução do statement VARDEC
 	Tradução do statement ASSIGN

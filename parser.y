@@ -368,5 +368,10 @@ int write_input_vars_and_main_functions() {
     fprintf(dest_file, "\t\tUSER_POSITION = ELEVATOR_POSITION\n");
     fprintf(dest_file, "\tend\nend\n");
 
+    // função de sair do elevador
+    fprintf(dest_file, "function LeaveElevator()\n");
+    fprintf(dest_file, "\tIS_USER_IN_ELEVATOR = 0\n");
+    fprintf(dest_file, "end\n");
+
     return 0;
 }
