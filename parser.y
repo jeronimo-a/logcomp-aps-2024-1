@@ -1,18 +1,19 @@
 %{
-    #include <stdio.h>
 
-    void yyerror(const char *s);
-    int yylex();
+#include <stdio.h>
 
-    int default_starting_floor_value = -5;
-    int n_floors = -1;
-    int starting_floor;
+void yyerror(const char *s);
+int yylex();
 
-    // ação chamada sempre que um piso novo é identificado
-    int new_floor(int selector);
+int default_starting_floor_value = -5;
+int n_floors = -1;
+int starting_floor;
+FILE *dest_file;
 
-    // ação chamada quando o piso térreo é identificado
-    int ground_floor(int selector);
+int new_floor(int selector);                // ação chamada sempre que um piso novo é identificado
+int ground_floor(int selector);             // ação chamada quando o piso térreo é identificado
+int write_input_vars_and_main_functions();  // ação que é chamada ao final do input, define as variáveis do input
+
 %}
 
 %locations
@@ -91,15 +92,15 @@ BLOCK:
     ;
 
 INPUT:
-    AA_ROOF EOL NEW_AA_STORY AA_GROUND_FLOOR EOL                { int result = ground_floor(0); if (result) { return 1; } }
-    | AA_ROOF EOL NEW_AA_STORY AA_GROUND_FLOOR AA_SELECTOR EOL  { int result = ground_floor(1); if (result) { return 1; } }
-    ;
+    AA_ROOF EOL NEW_AA_STORY AA_GROUND_FLOOR EOL                { if (ground_floor(0) || write_input_vars_and_main_functions()) { return 1; }; }
+    | AA_ROOF EOL NEW_AA_STORY AA_GROUND_FLOOR AA_SELECTOR EOL  { if (ground_floor(1) || write_input_vars_and_main_functions()) { return 1; }; }
+    ; 
 
 NEW_AA_STORY:
-    AA_STORY EOL                                { int result = new_floor(0); if (result) { return 1; } }
-    | AA_STORY AA_SELECTOR EOL                  { int result = new_floor(1); if (result) { return 1; } }
-    | AA_STORY EOL NEW_AA_STORY                 { int result = new_floor(0); if (result) { return 1; } }
-    | AA_STORY AA_SELECTOR EOL NEW_AA_STORY     { int result = new_floor(1); if (result) { return 1; } }
+    AA_STORY EOL                                { if (new_floor(0)) { return 1; } }
+    | AA_STORY AA_SELECTOR EOL                  { if (new_floor(1)) { return 1; } }
+    | AA_STORY EOL NEW_AA_STORY                 { if (new_floor(0)) { return 1; } }
+    | AA_STORY AA_SELECTOR EOL NEW_AA_STORY     { if (new_floor(1)) { return 1; } }
     ;
 
 COMPARATOR:
@@ -236,7 +237,18 @@ FACTOR:
 %%
 
 int main() {
+
+    // abre/cria o arquivo do código intermediário em Lua
+    dest_file = fopen("intermediate.lua", "w");
+    if (dest_file == NULL) {
+        fprintf(stderr, "Erro ao abrir o arquivo intermediário.");
+        return 1;
+    }
+
+    // inicializa o piso inicial do elevador
     starting_floor = default_starting_floor_value;
+
+    // faz o parsing
     if (!yyparse()) {
         printf("Floors: %d\n", n_floors);
         printf("Start: %d\n", starting_floor);
@@ -244,6 +256,8 @@ int main() {
     } else {
         printf("Parsing mal sucedido!\n");
     }
+
+    fclose(dest_file);
     return 0;
 }
 
@@ -269,7 +283,7 @@ int new_floor(int selector) {
 
     // atualiza a quantidade de pisos
     n_floors++;
-    
+
     return 0;
 }
 
@@ -289,5 +303,15 @@ int ground_floor(int selector) {
     starting_floor += 2;
     if (selector) { starting_floor = 0; }
 
+    return 0;
+}
+
+// ação chamada após a conclusão do input, define as variáveis de input:
+// altura do prédio e posição inicial do elevador
+int write_input_vars_and_main_functions() {
+    fprintf(dest_file, "local N_FLOORS = %d\n", n_floors);
+    fprintf(dest_file, "local STARTING_FLOOR = %d\n", starting_floor);
+    fprintf(dest_file, "local ELEVATOR_POSITION = STARTING_FLOOR\n");
+    fprintf(dest_file, "local USER_POSITION = 0\n");
     return 0;
 }
