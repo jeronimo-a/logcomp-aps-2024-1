@@ -157,7 +157,7 @@ PRINT_STAT:
 
 // enquanto waiting elevador EOL BLOCK END
 WHILE_STAT:
-    WHILE_1 WHILE_2 WHILE_3_CALL_ENTER_LEAVE_2 EOL BLOCK END
+    WHILE_1 WHILE_2 WHILE_3_CALL_ENTER_LEAVE_2 EOL { fprintf(DEST_FILE, "while not IsElevatorOnUserFloor() do\n"); } BLOCK END { fprintf(DEST_FILE, "end"); }
     ;
 
 // térreo ??? EOL BLOCK END

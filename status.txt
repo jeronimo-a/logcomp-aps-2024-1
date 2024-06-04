@@ -34,6 +34,7 @@ Tradutor:
 		Tradução do statement VARDEC
 		Tradução do statement ASSIGN
 		Tradução do statement PRINT
+		Tradução do WHILE
 
 	Fazer:
-		Tradução do WHILE
+		Tradução do IF
