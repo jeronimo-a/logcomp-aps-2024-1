@@ -313,5 +313,12 @@ int write_input_vars_and_main_functions() {
     fprintf(dest_file, "local ELEVATOR_POSITION = STARTING_FLOOR\n");
     fprintf(dest_file, "local USER_POSITION = 0\n");
     fprintf(dest_file, "local USER_IN_ELEVATOR = 0\n");
+    fprintf(dest_file, "function is_user_on_roof()\n");
+    fprintf(dest_file, "\treturn USER_POSITION == N_FLOORS + 1\n");
+    fprintf(dest_file, "end\n");
+    fprintf(dest_file, "function go_up_stairs()\n");
+    fprintf(dest_file, "\tif not is_user_on_roof() then\n");
+    fprintf(dest_file, "\t\tUSER_POSITION = USER_POSITION + 1\n");
+    fprintf(dest_file, "\tend\nend\n");
     return 0;
 }
