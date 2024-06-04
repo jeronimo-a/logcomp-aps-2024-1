@@ -15,6 +15,7 @@ int ground_floor(int selector);             // ação chamada quando o piso tér
 int write_input_vars_and_main_functions();  // ação que é chamada ao final do input, define as variáveis do input
 int vardec(char *key, int assign);          // declaração de variável
 int assign(char *key);                      // atribuição pura de variável
+int push_elevator_button(int floor);        // aperta o botão de dentro do elevador para determinado piso
 
 %}
 
@@ -57,7 +58,7 @@ int assign(char *key);                      // atribuição pura de variável
 %token SUBIR_ESCADA_1
 %token DESCER_ESCADA_1
 %token SUBIR_DESCER_ESCADA_2
-%token LITERAL_PRINT_1
+%token FREE_PRINT_1
 %token OR
 %token AND
 %token EQUAL
@@ -143,7 +144,7 @@ STATEMENT:
     | PUSH_STAT
     | UP_STAT
     | DOWN_STAT
-    | LITERAL_PRINT_STAT
+    | FREE_PRINT_STAT
     | NOOP                  { fprintf(DEST_FILE, "NoOp()"); }
     ;
 
@@ -187,8 +188,8 @@ LEAVE_STAT:
 
 // push botão for o NUMBER piso ou push botão for o ground piso
 PUSH_STAT:
-    PUSH_BUTTON_1 PUSH_BUTTON_2 PUSH_BUTTON_3 PUSH_BUTTON_4 NUMBER PUSH_BUTTON_5
-    | PUSH_BUTTON_1 PUSH_BUTTON_2 PUSH_BUTTON_3 PUSH_BUTTON_4 GROUND PUSH_BUTTON_5
+    PUSH_BUTTON_1 PUSH_BUTTON_2 PUSH_BUTTON_3 PUSH_BUTTON_4 NUMBER PUSH_BUTTON_5    { if (push_elevator_button($5)) { return 1; }; }
+    | PUSH_BUTTON_1 PUSH_BUTTON_2 PUSH_BUTTON_3 PUSH_BUTTON_4 GROUND PUSH_BUTTON_5  { if (push_elevator_button(0)) { return 1; }; }
     ;
 
 // subir stairs 
@@ -200,8 +201,8 @@ DOWN_STAT:
     DESCER_ESCADA_1 SUBIR_DESCER_ESCADA_2
     ;
 
-LITERAL_PRINT_STAT:
-    LITERAL_PRINT_1 B_EXPRESSION
+FREE_PRINT_STAT:
+    FREE_PRINT_1 B_EXPRESSION
     ;
 
 B_EXPRESSION:
@@ -243,7 +244,7 @@ FACTOR:
 int main() {
 
     // abre/cria o arquivo do código intermediário em Lua
-    DEST_FILE = fopen("intermediate.lua", "w");
+    DEST_FILE = fopen(".intermediate.lua", "w");
     if (DEST_FILE == NULL) {
         fprintf(stderr, "Erro ao abrir o arquivo intermediário.");
         return 1;
@@ -381,6 +382,12 @@ int write_input_vars_and_main_functions() {
     fprintf(DEST_FILE, "function NoOp()\n");
     fprintf(DEST_FILE, "\treturn 0\n");
     fprintf(DEST_FILE, "end\n");
+    
+    // função de apertar o botão do elevador
+    fprintf(DEST_FILE, "function PushElevatorButton(floor)\n");
+    fprintf(DEST_FILE, "\tif IS_USER_IN_ELEVATOR then\n");
+    fprintf(DEST_FILE, "\t\tELEVATOR_WANTED_POSITION = floor\n");
+    fprintf(DEST_FILE, "\tend\nend\n");
 
     // sinal para o pósprocessador
     fprintf(DEST_FILE, "### SIGNAL ###\n");
@@ -396,5 +403,10 @@ int vardec(char *key, int assign) {
 
 int assign(char *key) {
     fprintf(DEST_FILE, "%s =", key);
+    return 0;
+}
+
+int push_elevator_button(int floor) {
+    fprintf(DEST_FILE, "PushElevatorButton(%d)\n", floor);
     return 0;
 }

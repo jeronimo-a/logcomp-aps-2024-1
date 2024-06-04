@@ -48,7 +48,7 @@ EOL     	[\n]
 "subir" 					{ return SUBIR_ESCADA_1; }
 "descer"					{ return DESCER_ESCADA_1; }
 "stairs"					{ return SUBIR_DESCER_ESCADA_2; }
-"show"                      { return LITERAL_PRINT_1; }
+"show"                      { return FREE_PRINT_1; }
 "or"						{ return OR; }
 "and"						{ return AND; }
 "=="						{ return EQUAL; }
