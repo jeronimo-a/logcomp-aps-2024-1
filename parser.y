@@ -162,7 +162,7 @@ WHILE_STAT:
 
 // térreo ??? EOL BLOCK END
 IF_STAT:
-    IF QUESTION QUESTION QUESTION EOL BLOCK END
+    IF QUESTION QUESTION QUESTION EOL { fprintf(DEST_FILE, "if IsUserOnGroundLevel() then\n"); } BLOCK END { fprintf(DEST_FILE, "end"); }
     ;
 
 // grab pombo IDENT é B_EXPRESSION ou grab pombo IDENT

@@ -34,7 +34,9 @@ Tradutor:
 		Tradução do statement VARDEC
 		Tradução do statement ASSIGN
 		Tradução do statement PRINT
-		Tradução do WHILE
+		Tradução do statement WHILE
+		Tradução do statement IF
 
 	Fazer:
-		Tradução do IF
+		Tradução do statement de chamada, entrada e saida do elevador
+		Script que insere MoveElevator entre cada linha
