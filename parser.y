@@ -375,6 +375,9 @@ int write_input_vars_and_main_functions() {
     fprintf(DEST_FILE, "\tIS_USER_IN_ELEVATOR = 0\n");
     fprintf(DEST_FILE, "end\n");
 
+    // sinal para o pósprocessador
+    fprintf(DEST_FILE, "### SIGNAL ###\n");
+
     return 0;
 }
 

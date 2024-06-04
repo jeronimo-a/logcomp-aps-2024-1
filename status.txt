@@ -37,6 +37,8 @@ Tradutor:
 		Tradução do statement WHILE
 		Tradução do statement IF
 		Tradução do statement de chamada, entrada e saida do elevador
+		Script que insere MoveElevator entre cada linha
 
 	Fazer:
-		Script que insere MoveElevator entre cada linha
+		NoOp
+		Tradução do statement PUSH
