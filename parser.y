@@ -172,15 +172,15 @@ DECLARE_STAT:
     ;
 
 CALL_STAT:
-    CALL_1 WHILE_3_CALL_ENTER_LEAVE_2
+    CALL_1 WHILE_3_CALL_ENTER_LEAVE_2   { fprintf(DEST_FILE, "CallElevator(USER_POSITION)"); }
     ;
 
 ENTER_STAT:
-    ENTER_1 WHILE_3_CALL_ENTER_LEAVE_2
+    ENTER_1 WHILE_3_CALL_ENTER_LEAVE_2  { fprintf(DEST_FILE, "EnterElevator()"); }
     ;
 
 LEAVE_STAT:
-    LEAVE_1 WHILE_3_CALL_ENTER_LEAVE_2
+    LEAVE_1 WHILE_3_CALL_ENTER_LEAVE_2  { fprintf(DEST_FILE, "LeaveElevator()"); }
     ;
 
 // push botão for o NUMBER piso ou push botão for o ground piso
